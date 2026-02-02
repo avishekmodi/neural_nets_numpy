@@ -5,18 +5,6 @@ import math
 
 np.random.seed(0)
 
-# generating dataset:
-def create_data(points, classes):
-    X = np.zeros((points*classes, 2))
-    y = np.zeros(points*classes, dtype='uint8')
-    for class_number in range(classes):
-        ix = range(points*class_number, points*(class_number+1))
-        r = np.linspace(0.0, 1, points)  # radius
-        t = np.linspace(class_number*4, (class_number+1)*4, points) +np.random.randn(points)*0.2
-        X[ix] = np.c_[r*np.sin(t*2.5), r*np.cos(t*2.5)]
-        y[ix] = class_number
-    return X, y
-
 
 # neural net:
 class Layer_Dense:
@@ -38,15 +26,6 @@ class Activation_Softmax:
         probabilities = exp_values / np.sum(exp_values, axis=1, keepdims=True)
         self.output = probabilities
 
-
-# generate data:
-X, y = create_data(points=100, classes=3)
-
-# plt.scatter(X[:,0], X[:, 1])
-# plt.show()
-
-# plt.scatter(X[:, 0], X[:, 1], c=y, cmap='brg')
-# plt.show()
 
 dense1 = Layer_Dense(2, 3)
 activation1 = Activation_ReLU()
